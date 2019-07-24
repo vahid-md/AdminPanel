@@ -12,5 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('layouts.admin');
+    return view('welcome');
 });
+
+Route::resource('admin/posts','AdminPostsController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
