@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Photo;
 use App\Post;
 use Illuminate\Http\Request;
@@ -16,7 +17,8 @@ class AdminPostsController extends Controller
      */
     public function index()
     {
-        return view('admin.post.index');
+        $posts = Post::all();
+        return view('admin.post.index',compact('posts'));
     }
 
     /**
@@ -26,7 +28,8 @@ class AdminPostsController extends Controller
      */
     public function create()
     {
-        return view('admin.post.create');
+        $categories = Category::pluck('name','id')->all();
+        return view('admin.post.create',compact('categories'));
     }
 
     /**
@@ -45,8 +48,10 @@ class AdminPostsController extends Controller
             $photo = Photo::create(['path'=>$name]);
             $input['photo_id'] = $photo->id;
         }
+        $tags = explode(",",$request->tag);
         $input['author'] = $user->name;
-        Post::create($input);
+        $post = Post::create($input);
+        $post->tag($tags);
         return redirect('admin/posts');
     }
 
@@ -69,7 +74,9 @@ class AdminPostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $categories = Category::pluck('name','id')->all();
+        return view('admin.post.edit',compact('post','categories'));
     }
 
     /**
@@ -81,7 +88,20 @@ class AdminPostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->all();
+        $user = Auth::user();
+        if($file = $request->file('photo_id')){
+            $name = $file->getClientOriginalName();
+            $file->move('images',$name);
+            $photo = Photo::create(['path'=>$name]);
+            $input['photo_id'] = $photo->id;
+        }
+        $tags = explode(",",$request->tag);
+        $input['author'] = $user->name;
+        $post = Post::findOrFail($id);
+        $post->update($input);
+        $post->tag($tags);
+        return redirect('admin/posts');
     }
 
     /**
@@ -92,6 +112,7 @@ class AdminPostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::findOrFail($id)->delete();
+        return redirect('admin/posts');
     }
 }

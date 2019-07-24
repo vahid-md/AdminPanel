@@ -10,13 +10,13 @@
     <meta name="author" content="">
 
     <title>SB Admin 2 - Dashboard</title>
-
     <!-- Custom fonts for this template-->
     <link href="{{asset('fonts/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/custom.css')}}" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -75,8 +75,9 @@
             </a>
             <div id="collapsePosts" class="collapse" aria-labelledby="headingPosts" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">All Posts</a>
-                    <a class="collapse-item" href="#">Add New</a>
+                    <a class="collapse-item" href="{{url('admin/posts')}}">All Posts</a>
+                    <a class="collapse-item" href="{{url('admin/posts/create')}}">Add New</a>
+                    <a class="collapse-item" href="{{url('admin/categories')}}">Categories</a>
                 </div>
             </div>
         </li>
@@ -352,16 +353,6 @@
 
 
                   @yield('content')
-
-            <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2019</span>
-                        </div>
-                    </div>
-                </footer>
-                <!-- End of Footer -->
 
 
 <!-- End of Page Wrapper -->

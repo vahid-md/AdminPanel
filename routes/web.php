@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::resource('admin/posts','AdminPostsController');
-
+Route::resource('admin/categories','AdminCategoriesController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
