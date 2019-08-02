@@ -20,3 +20,5 @@ Route::resource('admin/categories','AdminCategoriesController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('admin/users','AdminUsersController');
